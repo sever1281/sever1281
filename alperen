@@ -1,0 +1,63 @@
+def findTrivial(collection, target):
+    comparisons = 0
+    for item in collection:
+        comparisons += 1
+        if item == target:
+            return True, comparisons
+    return False, comparisons 
+    def findBinary(collection, target):
+    left, right = 0, len(collection) - 1
+    comparisons = 0
+    
+    while left <= right:
+        mid = (left + right) // 2
+        comparisons += 1
+        if collection[mid] == target:
+            return True, comparisons
+        elif collection[mid] < target:
+            left = mid + 1
+        else:
+            right = mid - 1
+    return False, comparisons 
+    import unittest
+
+class TestSearchFunctions(unittest.TestCase):
+    def test_findTrivial(self):
+        collection = [1, 2, 3, 4, 5]
+        self.assertEqual(findTrivial(collection, 3), (True, 3))
+        self.assertEqual(findTrivial(collection, 6), (False, 5))
+
+    def test_findBinary(self):
+        collection = sorted([5, 1, 3, 4, 2])
+        self.assertEqual(findBinary(collection, 3), (True, 2))
+        self.assertEqual(findBinary(collection, 6), (False, 3))
+
+if __name__ == "__main__":
+    unittest.main() 
+    import matplotlib.pyplot as plt
+
+sizes = range(10, 110, 10) + [100000, 200000, 300000, 400000, 500000, 600000, 700000]
+comparisons = []
+
+for size in sizes:
+    collection = list(range(size))  # [0, 1, ..., size-1]
+    found, comp = findTrivial(collection, size - 1)  # Search for the last element
+    comparisons.append(comp)
+
+plt.plot(sizes, comparisons)
+plt.xlabel("Collection Size")
+plt.ylabel("Comparisons")
+plt.title("Trivial Search Comparisons vs Collection Size")
+plt.show() 
+comparisons_binary = []
+
+for size in sizes:
+    collection = list(range(size))  # [0, 1, ..., size-1]
+    found, comp = findBinary(collection, size - 1)  # Search for the last element
+    comparisons_binary.append(comp)
+
+plt.plot(sizes, comparisons_binary)
+plt.xlabel("Collection Size")
+plt.ylabel("Comparisons")
+plt.title("Binary Search Comparisons vs Collection Size")
+plt.show() 
